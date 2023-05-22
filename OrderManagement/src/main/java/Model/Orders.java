@@ -10,6 +10,8 @@ public class Orders {
     private int PID;
 
     private int cantitate;
+    public Orders()
+    {}
 
     public Orders(int OID, int CID, int PID, int cantitate) {
         this.OID = OID;

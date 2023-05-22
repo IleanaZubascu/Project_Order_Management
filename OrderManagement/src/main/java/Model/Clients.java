@@ -9,6 +9,9 @@ public class Clients {
     private String nume;
     private String adresa;
     private String contact;
+    public Clients(){
+
+    }
      public Clients(int cid, String nume, String adresa, String contact)
      {
          this.CID=cid;

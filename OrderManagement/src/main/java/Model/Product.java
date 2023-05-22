@@ -7,6 +7,7 @@ public class Product {
     private String numeProdus;
     private int pret;
     private int stoc;
+    public Product(){}
 
     public Product(int PID, String numeProdus, int pret, int stoc) {
         this.PID = PID;

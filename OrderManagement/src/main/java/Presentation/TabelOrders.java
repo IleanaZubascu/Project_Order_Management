@@ -1,7 +1,9 @@
 package Presentation;
 
+import Connection.ReflectionClass;
 import DataAccess.ClientDAO;
 import DataAccess.OrderDAO;
+import DataAccess.ProductDAO;
 import Model.Clients;
 import Model.Orders;
 
@@ -14,8 +16,7 @@ public class TabelOrders extends JFrame {
     public TabelOrders()
     {
         ArrayList<Orders> orders= OrderDAO.viewOrders();
-        View v=new View();
-        JTable table=v.tabelOrders(orders);
+        JTable table = ReflectionClass.getTable(OrderDAO.getAll());
         JScrollPane scrollPane=new JScrollPane(table);
         this.add(scrollPane);
         this.setTitle("Table Orders");

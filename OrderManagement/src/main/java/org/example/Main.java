@@ -5,6 +5,7 @@ import BusinessLogic.OrderBLL;
 import BusinessLogic.ProductBLL;
 import DataAccess.ClientDAO;
 import DataAccess.OrderDAO;
+import DataAccess.ProductDAO;
 import Model.Clients;
 import Model.Orders;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
@@ -23,10 +24,8 @@ public class Main {
         //ProductBLL p=new ProductBLL();
         //p.updateProductBLL(1,"Caise",12,30);
 
-        Orders o=new Orders(3,1,10);
-        OrderBLL b=new OrderBLL();
-        b.insertOrderBLL(o);
 
+       System.out.println(ProductDAO.getAll());
 
         //String u="13 4";
         //String c;

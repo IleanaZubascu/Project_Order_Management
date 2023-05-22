@@ -212,4 +212,35 @@ public class ProductDAO {
         return products;
     }
 
+    public static ArrayList<Product> getAll() {
+        Product product = null;
+        ArrayList<Product> list= new ArrayList<>();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        try{
+
+
+            ResultSet rs = null;
+            findStatement = dbConnection.prepareStatement(viewStatementString);
+
+
+            //findStatement.setLong(1, clientID);
+            rs = findStatement.executeQuery();
+            while(rs.next())
+            {   int productID= rs.getInt("PID");
+                String nume = rs.getString("numeProdus");
+                int pret = rs.getInt("pret");
+                int stoc = rs.getInt("stoc");
+                list.add(new Product(productID,nume,pret,stoc));
+            }
+        }catch (SQLException e) {
+            LOGGER.log(Level.WARNING,"ProductDAO:viewAll " + e.getMessage());
+        } finally {
+            // ConnectionFactory.close(rs);
+            ConnectionFactory.close(findStatement);
+            ConnectionFactory.close(dbConnection);
+        }
+        return list;
+    }
+
 }

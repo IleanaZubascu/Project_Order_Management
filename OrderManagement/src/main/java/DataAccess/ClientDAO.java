@@ -2,6 +2,7 @@ package DataAccess;
 
 import Model.Clients;
 import Connection.ConnectionFactory;
+import com.mysql.cj.xdevapi.Client;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -220,6 +221,36 @@ public class ClientDAO {
             clients.add(c.getCID()+" "+c.getNume()+" "+c.getAdresa()+" "+c.getContact());
         }
         return clients;
+    }
+    public static ArrayList<Clients> getAll() {
+        Clients client = null;
+        ArrayList<Clients> list= new ArrayList<>();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        try{
+
+
+            ResultSet rs = null;
+            findStatement = dbConnection.prepareStatement(viewStatementString);
+
+
+            //findStatement.setLong(1, clientID);
+            rs = findStatement.executeQuery();
+            while(rs.next())
+               {   int clientID= rs.getInt("CID");
+                   String nume = rs.getString("nume");
+                String adresa = rs.getString("adresa");
+                String contact = rs.getString("contact");
+                list.add(new Clients(clientID,nume,adresa,contact));
+               }
+            }catch (SQLException e) {
+            LOGGER.log(Level.WARNING,"ClientDAO:findClientById " + e.getMessage());
+        } finally {
+           // ConnectionFactory.close(rs);
+            ConnectionFactory.close(findStatement);
+            ConnectionFactory.close(dbConnection);
+        }
+        return list;
     }
 
 }

@@ -3,6 +3,7 @@ package DataAccess;
 import Model.Clients;
 import Model.Orders;
 import Connection.ConnectionFactory;
+import Model.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -181,6 +182,35 @@ public class OrderDAO {
             ConnectionFactory.close(dbConnection);
         }
         return insertedId;
+    }
+    public static ArrayList<Orders> getAll() {
+        ArrayList<Orders> list= new ArrayList<>();
+        Connection dbConnection = ConnectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        try{
+
+
+            ResultSet rs = null;
+            findStatement = dbConnection.prepareStatement(viewStatementString);
+
+
+            //findStatement.setLong(1, clientID);
+            rs = findStatement.executeQuery();
+            while(rs.next())
+            {   int orderID= rs.getInt("OID");
+                int CID = rs.getInt("CID");
+                int PID = rs.getInt("PID");
+                int cantitate = rs.getInt("cantitate");
+                list.add(new Orders(orderID,CID,PID,cantitate));
+            }
+        }catch (SQLException e) {
+            LOGGER.log(Level.WARNING,"OrderDAO:viewAll " + e.getMessage());
+        } finally {
+            // ConnectionFactory.close(rs);
+            ConnectionFactory.close(findStatement);
+            ConnectionFactory.close(dbConnection);
+        }
+        return list;
     }
 
 }
